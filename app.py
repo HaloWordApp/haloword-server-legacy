@@ -12,7 +12,7 @@ API_URL = "http://www.dictionaryapi.com/api/v1/references/collegiate/xml/{}?key=
 
 @app.route("/<word>")
 def index(word):
-    if redis_store.get(word) == None:
+    if not redis_store.exists(word):
         text = requests.get(API_URL.format(word)).text
         redis_store.set(word, text)
         return text
