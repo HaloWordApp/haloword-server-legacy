@@ -42,7 +42,7 @@ def request_count():
     results = [{"key": key[:-6], "value": redis_store.get(key)} for key in keys]
     results = sorted(results, key=lambda r: r["value"], reverse=True)
 
-    formated_results = ["{}{}{}".format(result["key"], " " * (16 - len(result["key"])), result["value"]) for result in results]
+    formated_results = ["{:>8}  {}".format(result["value"], result["key"]) for result in results]
     html = "<pre>" + "\n".join(formated_results)
     html += "\n\nTotal: {}".format(len(keys)) + "</pre>"
 
