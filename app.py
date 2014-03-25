@@ -25,6 +25,15 @@ def index(word):
                     mimetype="application/xml",
                     headers=headers)
 
+
+@app.route("/webster/list/")
+def word_list():
+    keys = sorted(redis_store.keys())
+    html = "<pre>" + "\n".join(keys)
+    html += "\n\nTotal: {}".format(len(keys)) + "</pre>"
+    return html
+
+
 if __name__ == "__main__":
     app.debug = True
     app.run()
