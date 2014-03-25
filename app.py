@@ -1,6 +1,5 @@
 from flask import Flask, Response
 import redis
-
 import requests
 
 app = Flask(__name__)
@@ -20,9 +19,11 @@ def index(word):
     else:
         text = redis_store.get(word)
 
+    headers = {"Cache-Control": "max-age=%d" % (3600 * 24 * 7,)}
     return Response(response=text,
                     status=200,
-                    mimetype="application/xml")
+                    mimetype="application/xml",
+                    headers=headers)
 
 if __name__ == "__main__":
     app.debug = True
