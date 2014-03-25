@@ -10,6 +10,7 @@ API_URL = "http://www.dictionaryapi.com/api/v1/references/collegiate/xml/{}?key=
 
 @app.route("/webster/query/<word>")
 def index(word):
+    word = word.lower()
     text = ""
 
     if not redis_store.exists(word):
