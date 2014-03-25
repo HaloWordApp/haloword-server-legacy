@@ -19,6 +19,8 @@ def index(word):
     else:
         text = redis_store.get(word)
 
+    redis_store.incr(word + ":count")
+
     headers = {"Cache-Control": "max-age=%d" % (3600 * 24 * 7,)}
     return Response(response=text,
                     status=200,
@@ -31,6 +33,19 @@ def word_list():
     keys = sorted(redis_store.keys())
     html = "<pre>" + "\n".join(keys)
     html += "\n\nTotal: {}".format(len(keys)) + "</pre>"
+    return html
+
+
+@app.route("/webster/count/")
+def request_count():
+    keys = redis_store.keys(pattern="*:count")
+    results = [{"key": key[:-6], "value": redis_store.get(key)} for key in keys]
+    results = sorted(results, key=lambda r: r["value"], reverse=True)
+
+    formated_results = ["{}{}{}".format(result["key"], " " * (16 - len(result["key"])), result["value"]) for result in results]
+    html = "<pre>" + "\n".join(formated_results)
+    html += "\n\nTotal: {}".format(len(keys)) + "</pre>"
+
     return html
 
 
