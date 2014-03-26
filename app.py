@@ -41,7 +41,7 @@ def word_list():
 def request_count():
     keys = redis_store.keys(pattern="*:count")
     results = [{"key": key[:-6], "value": redis_store.get(key)} for key in keys]
-    results = sorted(results, key=lambda r: r["value"], reverse=True)
+    results = sorted(results, key=lambda r: int(r["value"]), reverse=True)
 
     formated_results = ["{:>8}  {}".format(result["value"], result["key"]) for result in results]
     html = "<pre>" + "\n".join(formated_results)
