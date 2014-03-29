@@ -14,7 +14,6 @@ def index(word):
     text = ""
 
     if not redis_store.exists(word):
-        print "Not cached:", word
         text = requests.get(API_URL.format(word)).text
         redis_store.set(word, text)
     else:
