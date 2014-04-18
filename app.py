@@ -1,6 +1,7 @@
 from flask import Flask, Response
 import redis
 import requests
+import urllib
 
 app = Flask(__name__)
 redis_store = redis.StrictRedis(host='localhost', port=6233, db=0)
@@ -10,12 +11,13 @@ API_URL = "http://www.dictionaryapi.com/api/v1/references/collegiate/xml/{}?key=
 
 @app.route("/webster/query/<word>")
 def index(word):
-    word = word.lower()
+    word = word.lower().strip()
     text = ""
 
     if not redis_store.exists(word):
-        text = requests.get(API_URL.format(word)).text
-        redis_store.set(word, text)
+        if len(word) < 40:
+            text = requests.get(API_URL.format(urllib.quote_plus(word.encode("utf8")))).text
+            redis_store.set(word, text)
     else:
         text = redis_store.get(word)
 
