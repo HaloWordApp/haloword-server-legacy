@@ -3,3 +3,5 @@ redis/redis.log
 redis/redis.pid
 *.pyc
 tmp
+
+settings.py
