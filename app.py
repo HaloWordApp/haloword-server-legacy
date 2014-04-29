@@ -2,7 +2,7 @@ from flask import Flask, Response
 import redis
 import requests
 import urllib
-from settings import API_KEY
+from settings import API_KEYS
 
 app = Flask(__name__)
 redis_store = redis.StrictRedis(host='localhost', port=6233, db=0)
@@ -18,6 +18,7 @@ def index(word):
     if not redis_store.exists(word):
         word_urlencoded = urllib.quote_plus(word.encode("utf8"))
         if len(word) < 40:
+            API_KEY = API_KEYS[len(word) % len(API_KEYS)]  # alternate between API keys
             text = requests.get(API_URL.format(word_urlencoded), params={"key": API_KEY}).text
             redis_store.set(word, text)
     else:
