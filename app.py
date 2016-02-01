@@ -5,7 +5,7 @@ import urllib
 from settings import API_KEYS
 
 app = Flask(__name__)
-redis_store = redis.StrictRedis(host='localhost', port=6233, db=0)
+redis_store = redis.StrictRedis(host='redis', port=6379, db=0)
 
 API_URL = "http://www.dictionaryapi.com/api/v1/references/collegiate/xml/{}"
 
