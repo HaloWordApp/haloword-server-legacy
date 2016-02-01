@@ -3,11 +3,11 @@ web:
   ports:
     - "6603:8000"
   volumes:
-    - ./settings.py:/app/settings.py
+    - ~/docker/haloword-server/settings.py:/app/settings.py
   links:
     - redis
 redis:
   image: redis:3.0.7-alpine
   volumes:
-    - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
-    - ./redis:/data
+    - ~/docker/haloword-server/redis.conf:/usr/local/etc/redis/redis.conf
+    - ~/docker/haloword-server:/data
