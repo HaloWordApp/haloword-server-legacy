@@ -1,4 +1,4 @@
 Halo Word Server
-===============
+================
 
-Just to cache API request.
+Just to cache API requests.
