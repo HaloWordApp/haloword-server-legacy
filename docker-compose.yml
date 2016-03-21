@@ -1,5 +1,5 @@
 web:
-  image: elaworkshop/haloword-server:1.0
+  image: elaworkshop/haloword-server:2.0
   ports:
     - "6603:8000"
   volumes:
