@@ -6,8 +6,10 @@ web:
     - ~/docker/haloword-server/settings.py:/app/settings.py
   links:
     - redis
+  restart: always
 redis:
   image: redis:3.0.7-alpine
   volumes:
     - ~/docker/haloword-server/redis.conf:/usr/local/etc/redis/redis.conf
     - ~/docker/haloword-server:/data
+  restart: always
